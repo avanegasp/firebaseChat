@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>firebase</title>
+  </head>
+  <body>
+
+    <form action="">
+
+      <div class="">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre">
+      </div>
+
+      <div class="">
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" rows="8" cols="30"></textarea>
+      </div>
+
+      <button type="button" id="btnEnviar">Envíar</button>
+    </form>
+
+    <ul id="chatUL">
+      <li>
+        <b> Nombre: </b> Mensaje
+      </li>
+      <li>
+        <b> Nombre: </b> Mensaje
+      </li>
+    </ul>
+
+
+
+  <script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
+  <script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC_2WGZYP4VpFQrYlki5M9mDh77NbeOyVI",
+    authDomain: "fir-chat-a5d05.firebaseapp.com",
+    databaseURL: "https://fir-chat-a5d05.firebaseio.com",
+    projectId: "fir-chat-a5d05",
+    storageBucket: "",
+    messagingSenderId: "631857466364"
+  };
+  firebase.initializeApp(config);
+
+
+  var txtNombre = document.getElementById('nombre');
+  var txtMensaje = document.getElementById('mensaje');
+  var btnEnviar = document.getElementById('btnEnviar');
+  var chatUL = document.getElementById('chatUL');
+
+  btnEnviar.addEventListener('click',function(){
+    var nombre = txtNombre.value;
+    var mensaje = txtMensaje.value;
+    // var html = "<li><b>"+nombre+":</b>"+mensaje+"</li>";
+    // chatUL.innerHTML += html;
+
+    firebase.database().ref('chat').push({
+      name : nombre,
+      message : mensaje
+    });
+  });
+
+    firebase.database().ref('chat')
+    .on('value', function(snapshot){
+        var html = '';
+      snapshot.forEach(function(e){
+        var element = e.val();
+        var nombre = element.name;
+        var mensaje = element.message;
+        html += "<li><b>"+nombre+":</b>"+mensaje+"</li>";
+      });
+
+      chatUL.innerHTML = html
+
+    });
+
+
+</script>
+  </body>
+</html>
