@@ -51,10 +51,10 @@
   var btnEnviar = document.getElementById('btnEnviar');
   var chatUL = document.getElementById('chatUL');
 
+
   btnEnviar.addEventListener('click',function(){
     var nombre = txtNombre.value;
     var mensaje = txtMensaje.value;
-    // var html = "<li><b>"+nombre+":</b>"+mensaje+"</li>";
     // chatUL.innerHTML += html;
 
     firebase.database().ref('chat').push({
@@ -72,9 +72,7 @@
         var mensaje = element.message;
         html += "<li><b>"+nombre+":</b>"+mensaje+"</li>";
       });
-
       chatUL.innerHTML = html
-
     });
 
 
